@@ -33,7 +33,14 @@ namespace EmailSender_MailKit.Controllers
         {
             //Use Partial View For Body (We Need Partial Convertor to String)
             string body = PartialToString.RenderViewToString(this, "_EmailBody");
-            await _EmailSenderService.SendEmailAsync("recevier Email", "Subject", body);
+            try
+            {
+                await _EmailSenderService.SendEmailAsync("recevier Email", "Subject", body);
+            }
+            catch (Exception ex)
+            {
+                return Content("Error: " + ex);
+            }
             return Content("Sended");
         }
     }
